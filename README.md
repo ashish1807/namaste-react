@@ -82,3 +82,8 @@ Most important hooks
 ## Note: Whenever state variable updated React renderes the component.
 
 - `useEffect()`
+
+# 2 types of Routing
+
+- Client side routing
+- Server side routing
