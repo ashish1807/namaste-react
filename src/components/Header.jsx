@@ -8,30 +8,29 @@ export const Header = () => {
   const onlineStatus = useOnlineStatus();
 
   useEffect(() => {
-    console.log('useEffect called');
   }, [buttonName]);
   return (
-    <div className="header">
+    <div className="flex justify-between bg-pink-100 shadow-lg items-center">
       <div className="logo-container">
         <Link to="/">
-          <img className="logo" src="https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png" />
+          <img className="w-[150px]" src="https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png" />
         </Link>
       </div>
       <div className="nav-items">
-        <ul>
-          <li>
+        <ul className="flex p-4 m-4">
+          <li className="px-4">
             Online status: {onlineStatus ? '✅' : '🔴'}
           </li>
-          <li>
+          <li className="px-4">
             <Link to="/">Home</Link>
           </li>
-          <li>
+          <li className="px-4">
             <Link to="/about">About Us</Link>
           </li>
-          <li>
+          <li className="px-4">
             <Link to="/contact">Contact Us</Link>
           </li>
-          <li>
+          <li className="px-4">
             <Link to="/grocery">Grocery</Link>
           </li>
           <li>Cart</li>

@@ -5,13 +5,11 @@ export const RestaurantCard = (props) => {
   const { name, avgRating, cuisines, costForTwo, cloudinaryImageId, id } = resData?.info;
   return (
     <div
-      className="res-card"
-      style={{
-        backgroundColor: '#f0f0f0',
-      }}
+      className="m-4 p-4 w-[250px] rounded-lg bg-gray-100 shadow hover:bg-gray-300 hover:shadow-2xl"
+
     >
-      <img className="res-logo" alt="res-logo" src={IMG_URL + cloudinaryImageId} />
-      <h3 className="res-name">{name}</h3>
+      <img className="rounded-lg h-[180px] w-[300px]" alt="res-logo" src={IMG_URL + cloudinaryImageId} />
+      <h3 className="font-bold py-4 text-lg">{name}</h3>
       <h4 className="res-cuisines">{cuisines.join(', ')}</h4>
       <h4 className="res-id">{id}</h4>
       <h4 className="res-avg-rating">{avgRating} star</h4>

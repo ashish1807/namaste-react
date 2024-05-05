@@ -25,18 +25,17 @@ export const Body = () => {
   };
 
   if (!isUserOnline) {
-    return (
-      <h1>Looks like you are offline check your internet connection.</h1>
-    )
+    return <h1>Looks like you are offline check your internet connection.</h1>;
   }
 
   return !listOfRestaurants.length ? (
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter">
-        <div className="search">
+      <div className="flex">
+        <div className="search m-4 p-4">
           <input
+            className="border border-solid  border-black"
             type="search"
             value={searchText}
             onChange={(event) => {
@@ -44,6 +43,7 @@ export const Body = () => {
             }}
           />
           <button
+            className="px-4 py-1 bg-green-100 m-4 rounded-lg"
             onClick={() => {
               const filteredSearchList = listOfRestaurants.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText?.toLowerCase())
@@ -53,21 +53,21 @@ export const Body = () => {
           >
             Search
           </button>
+          <button
+            className="rounded-lg px-4 py-1 m-4 bg-gray-100"
+            onClick={() => {
+              const filteredList = listOfRestaurants.filter((res) => res.info.avgRating > 4);
+              setFilteredRestaurant(filteredList);
+            }}
+          >
+            Top rated restaurants
+          </button>
         </div>
-        <button
-          className="filter-btn"
-          onClick={() => {
-            const filteredList = listOfRestaurants.filter((res) => res.info.avgRating > 4);
-            setFilteredRestaurant(filteredList);
-          }}
-        >
-          Top rated restaurants
-        </button>
       </div>
 
-      <div className="res-container">
+      <div className="flex flex-wrap">
         {filteredRestaurants.map((restaurant) => (
-          <Link className='res-card-hyperlink' key={restaurant.info.id} to={'/restaurants/' + restaurant.info.id}>
+          <Link className="res-card-hyperlink" key={restaurant.info.id} to={'/restaurants/' + restaurant.info.id}>
             <RestaurantCard resData={restaurant} />
           </Link>
         ))}
