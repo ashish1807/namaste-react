@@ -1,11 +1,14 @@
-import { RestaurentCard } from './RestaurentCard';
+import { RestaurantCard } from './RestaurentCard';
 import { useState, useEffect } from 'react';
 import { Shimmer } from './Shimmer';
 import { Link } from 'react-router-dom';
+import useOnlineStatus from '../utils/useOnlineStatus';
 export const Body = () => {
-  let [listOfRestaurents, setListOfRestaurent] = useState([]);
-  let [filteresRestaurents, setFilteresRestaurent] = useState([]);
+  let [listOfRestaurants, setListOfRestaurant] = useState([]);
+  let [filteredRestaurants, setFilteredRestaurant] = useState([]);
   let [searchText, setSearchText] = useState([]);
+
+  let isUserOnline = useOnlineStatus();
 
   useEffect(() => {
     fetchData();
@@ -13,15 +16,21 @@ export const Body = () => {
 
   const fetchData = async () => {
     const data = await fetch(
-      'https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.21700&lng=73.14830&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING'
+      'https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.1962183&lng=72.957856&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING'
     );
 
     const json = await data.json();
-    setListOfRestaurent(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    setFilteresRestaurent(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setListOfRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setFilteredRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
   };
 
-  return !listOfRestaurents.length ? (
+  if (!isUserOnline) {
+    return (
+      <h1>Looks like you are offline check your internet connection.</h1>
+    )
+  }
+
+  return !listOfRestaurants.length ? (
     <Shimmer />
   ) : (
     <div className="body">
@@ -36,10 +45,10 @@ export const Body = () => {
           />
           <button
             onClick={() => {
-              const filteredSearchList = listOfRestaurents.filter((res) =>
+              const filteredSearchList = listOfRestaurants.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText?.toLowerCase())
               );
-              setFilteresRestaurent(filteredSearchList);
+              setFilteredRestaurant(filteredSearchList);
             }}
           >
             Search
@@ -48,18 +57,18 @@ export const Body = () => {
         <button
           className="filter-btn"
           onClick={() => {
-            const filteredList = listOfRestaurents.filter((res) => res.info.avgRating > 4);
-            setListOfRestaurent(filteredList);
+            const filteredList = listOfRestaurants.filter((res) => res.info.avgRating > 4);
+            setFilteredRestaurant(filteredList);
           }}
         >
-          Top rated restaurents
+          Top rated restaurants
         </button>
       </div>
 
       <div className="res-container">
-        {filteresRestaurents.map((restaurent) => (
-          <Link key={restaurent.info.id} to={'/restaurents/' + restaurent.info.id}>
-            <RestaurentCard resData={restaurent} />
+        {filteredRestaurants.map((restaurant) => (
+          <Link className='res-card-hyperlink' key={restaurant.info.id} to={'/restaurants/' + restaurant.info.id}>
+            <RestaurantCard resData={restaurant} />
           </Link>
         ))}
       </div>

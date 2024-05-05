@@ -36,7 +36,9 @@
   box-shadow: 3px 3px lightgray;
 }
 .res-logo {
-  width: 190px;
+  width: 100%;
+  max-width: 200px;
+  height: auto;
 }
 .search {
   padding: 10px;
@@ -63,4 +65,20 @@
 .login-btn {
   padding: 0 20px;
   cursor: pointer;
+}
+.res-name {
+  font-size: 20px;
+  color: #17173A;
+  font-weight: 600;
+}
+.res-card-hyperlink {
+  text-decoration: none;
+}
+.res-cuisines {
+  font-size: 16px;
+  font-weight: 400;
+}
+.user-card {
+  padding: 10px;
+  border: 1px solid black
 }
