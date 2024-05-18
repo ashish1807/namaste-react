@@ -1,6 +1,6 @@
 import { IMG_URL } from '../utils/constants';
 
-export const RestaurantCard = (props) => {
+const RestaurantCard = (props) => {
   const { resData } = props;
   const { name, avgRating, cuisines, costForTwo, cloudinaryImageId, id } = resData?.info;
   return (
@@ -17,3 +17,19 @@ export const RestaurantCard = (props) => {
     </div>
   );
 };
+
+
+// High order component
+// input RestaurantCard => RestaurantCardPromoted
+
+export const withPromotedLabel = (RestaurantCard) => {
+  return (props) => {
+    return (
+      <div>
+        <label>Promoted</label>
+        <RestaurantCard {...props}/>
+      </div>
+    )
+  }
+}
+export default RestaurantCard
